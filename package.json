@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsx watch src/app.ts",
     "start": "tsx src/app.ts",
-    "build": "ttsc --noEmit",
+    "build": "tsc --noEmit",
     "test": "node --test",
     "create-command": "tsx scripts/create-command.ts"
   },
