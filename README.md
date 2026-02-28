@@ -5,8 +5,8 @@
 
 **NOTE: IKOR is heavily under development. Use it at your own risk.**
 
-IKOR is a simple Stoat bot that aims to replicate some fun functionalities other bots had on Discord.  
-This is primarily aimed at my group of friends, and built around our needs - but maybe the code helps other people that want to build bots.
+IKOR is a modular Stoat bot built with extensibility first: the core is intentionally simple,
+so new commands and features can be added with minimal friction.
 
 ## Documentation
 - Wiki: https://github.com/razvanbackpack/ikor-bot/wiki
