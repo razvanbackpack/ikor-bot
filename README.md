@@ -32,4 +32,4 @@ There is a modifier, but it is set to x1.
 
 
 ### How to create a command?
-```npm run create-command -- command-name```
+```npm run create-command -- <command-name>```
