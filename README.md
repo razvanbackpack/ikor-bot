@@ -1,5 +1,5 @@
 # IKOR - Stoat chat bot
-*Version: v0.1.0*
+*Version: v0.1.2*
 
 **NOTE: IKOR is heavily under development. Use it at your own risk.**
 
