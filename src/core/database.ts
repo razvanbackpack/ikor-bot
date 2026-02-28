@@ -21,24 +21,5 @@ const USER_LEVEL_DATA_TABLE = `
   );
 `;
 
-const CUSTOM_COMMAND_TABLE = `
-  CREATE TABLE IF NOT EXISTS custom_command (
-    id TEXT PRIMARY KEY,
-    type INTEGER DEFAULT 0,
-    created_at INTEGER
-  );
-`;
-
-const CUSTOM_COMMAND_DATA_TABLE = `
-  CREATE TABLE IF NOT EXISTS custom_command_data (
-    id TEXT INTEGER KEY,
-    command_id INTEGER,
-    text_response TEXT NOT NULL,
-    reactions TEXT NOT NULL
-  );
-`;
-
 db.exec(USER_TABLE);
 db.exec(USER_LEVEL_DATA_TABLE);
-db.exec(CUSTOM_COMMAND_TABLE);
-db.exec(CUSTOM_COMMAND_DATA_TABLE);
