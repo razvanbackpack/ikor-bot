@@ -7,4 +7,4 @@
 IKOR is a modular Stoat bot built with extensibility first: the core is intentionally simple,
 so new commands and features can be added with minimal friction.
 
-[> Check out the wiki](https://github.com/razvanbackpack/ikor-bot/wiki)
+[[> Documentation]](https://github.com/razvanbackpack/ikor-bot/wiki)
