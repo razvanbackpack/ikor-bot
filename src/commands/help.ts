@@ -1,6 +1,6 @@
 import { type Command, commands } from "../core/command";
 import { Message } from "stoat.js";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 
 const help: Command = {
   name: "help",
@@ -32,7 +32,7 @@ const commandList = async (message: Message, args: string[]) => {
       colour: "#00ff00"
   };
 
-  emitMessage("EMBED", "EMBED", message, embed);
+  emitMessage(MESSAGE_EVENTS.EMBED, MESSAGE_TYPES.EMBED, message, embed);
 }
 
 export default help;

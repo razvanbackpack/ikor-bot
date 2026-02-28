@@ -1,6 +1,6 @@
 import { type Command } from "../core/command";
 import { BOT_INFO } from "../core/config";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const info: Command = {
@@ -20,7 +20,7 @@ const info: Command = {
       colour: "#5865F2"
     };
 
-    emitMessage("EMBED", "EMBED", message, embed);
+    emitMessage(MESSAGE_EVENTS.EMBED, MESSAGE_TYPES.EMBED, message, embed);
 
   }
 };

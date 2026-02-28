@@ -2,7 +2,7 @@ import { BOT_INFO } from './core/config';
 import logger from './util/logger';
 import { handleXPforCurrentMessage } from "./services/xpService";
 import { handleCommand } from './services/commandService';
-import { client } from "./client/client";
+import { client } from "./core/client";
 import { Message } from 'stoat.js';
 
 let running = true;

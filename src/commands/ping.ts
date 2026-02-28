@@ -1,5 +1,5 @@
 import { type Command } from "../core/command";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const ping: Command = {
@@ -8,9 +8,9 @@ const ping: Command = {
   description: "Pong!",
   execute: async (message: Message, args: string[]) => {
     const start = Date.now();
-    const reply = await emitMessage("REPLY", "MESSAGE", message, "Pinging...");
+    const reply = await emitMessage(MESSAGE_EVENTS.REACT, MESSAGE_TYPES.MESSAGE, message, "Pinging...");
     if(reply)
-      emitMessage("EDIT", "MESSAGE", reply, `Pong! Took ${Date.now() - start}ms`);
+      emitMessage(MESSAGE_EVENTS.EDIT, MESSAGE_TYPES.MESSAGE, reply, `Pong! Took ${Date.now() - start}ms`);
   }
 }
 

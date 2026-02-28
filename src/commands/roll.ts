@@ -1,6 +1,6 @@
 import { type Command } from "../core/command";
 import IRollResult from "../interface/IRollResult";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const roll: Command = {
@@ -39,7 +39,7 @@ const roll: Command = {
       colour: "#00ff00"
     };
 
-    emitMessage("EMBED", "EMBED", message, embed);
+    emitMessage(MESSAGE_EVENTS.EMBED, MESSAGE_TYPES.EMBED, message, embed);
   }
 }
 

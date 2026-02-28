@@ -1,4 +1,4 @@
-import { client, PREFIX } from "../client/client";
+import { client, PREFIX } from "../core/client";
 import { commands } from "../core/command";
 import { Message } from "stoat.js";
 import { Command } from "../core/command";

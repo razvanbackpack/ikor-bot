@@ -1,6 +1,6 @@
 import { type Command } from "../core/command";
 import { randomEmoji } from "../util/randomEmoji";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const react: Command = {
@@ -8,7 +8,7 @@ const react: Command = {
   disabled: true,
   description: "React to the user message",
   execute: async (message: Message, args: string[]) => {
-    emitMessage("REACT", "REACT", message, randomEmoji());
+    emitMessage(MESSAGE_EVENTS.REACT, MESSAGE_TYPES.REACT, message, randomEmoji());
   }
 }
 

@@ -3,7 +3,7 @@ import { db } from '../core/database';
 import { getXpToNextLevel } from "../services/xpService";
 import IUserLevelData from "../interface/IUserLevelData";
 import { MESSAGE_STRINGS } from "../core/config";
-import { emitMessage } from "../services/messageService";
+import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const POSITIONS_TO_SHOW = 25;
@@ -22,7 +22,7 @@ const outputLeaderboard = async (message:Message) => {
   const leaderboardData: string[] = [];
 
   if(usersLevelAndXp.length === 0) {
-    emitMessage("REPLY", "MESSAGE", message, "No leaderboard data yet. Send messages and be the first!");
+    emitMessage(MESSAGE_EVENTS.REPLY, MESSAGE_TYPES.MESSAGE, message, "No leaderboard data yet. Send messages and be the first!");
     return;
   }
 
@@ -42,7 +42,7 @@ const outputLeaderboard = async (message:Message) => {
     colour: "#00ff00"
   };
 
-  emitMessage("EMBED", "EMBED", message, embed);
+  emitMessage(MESSAGE_EVENTS.EMBED, MESSAGE_TYPES.EMBED, message, embed);
 }
 
 const getUsersLevelAndXp = () => {

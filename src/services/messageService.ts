@@ -1,5 +1,5 @@
 import { BotEvents } from "../core/botEvents";
-import { client } from "../client/client";
+import { client } from "../core/client";
 import logger from "../util/logger";
 import IChatReply from "../interface/IChatReply";
 import { BotEventError } from "../errors/BotEventError";
@@ -10,6 +10,19 @@ const enum BOT_EVENTS_ERROR {
   REPLY = "CONTENT_UNDEFINED_CHAT:REPLY",
   EMBED = "EMBEDS_UNDEFINED_CHAT:EMBED",
 };
+
+export enum MESSAGE_EVENTS {
+  "REPLY" = "REPLY",
+  "EDIT" = "EDIT",
+  "EMBED" = "EMBED",
+  "REACT" = "REACT"
+}
+
+export enum MESSAGE_TYPES {
+  "MESSAGE" = "MESSAGE",
+  "EMBED" = "EMBED",
+  "REACT" = "REACT"
+}
 
 export function registerMessageHandlers() {
   BotEvents.on("chat:reply", async (payload) => {

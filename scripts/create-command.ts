@@ -24,14 +24,15 @@ const classLike = name
   .join("");
 
 const template = `import { type Command } from "../core/command";
-  import { emitMessage } from "../services/messageService";
+  import { emitMessage, MESSAGE_EVENTS, MESSAGE_TYPES } from "../services/messageService";
+  
 
   const ${classLike}: Command = {
     name: "${name}",
     disabled: false,
     description: "TODO: describe ${name}",
     execute: async (message, args) => {
-      emitMessage("REPLY", "MESSAGE", message, "hello");
+      emitMessage(MESSAGE_EVENTS.REPLY, MESSAGE_TYPES.MESSAGE, message, "Hello there!");
     },
   };
 
