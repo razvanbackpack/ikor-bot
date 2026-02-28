@@ -25,8 +25,11 @@ Messages are checked, for each user, based on a cooldown timer, and then rewarde
 **Cooldown** is **20 seconds** and it rewards **10 XP** per level. 
 There is a modifier, but it is set to x1.
 
-
 ### How to run it?
 1. Copy `.env.example` to `.env`
 2. Get your bot token and fill it in `.env`
 3. `cd` into the code and then run `npm run dev`
+
+
+### How to create a command?
+```npm run create-command -- command-name```
