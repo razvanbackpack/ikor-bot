@@ -1,26 +1,27 @@
 import { register, type Command } from "./command";
 import { db } from '../core/database';
-import type { Message } from "stoat.js";
 import { getXpToNextLevel } from "../services/xpService";
 import IUserLevelData from "../interface/IUserLevelData";
+import { MESSAGE_STRINGS } from "../core/config";
+import { emitMessage } from "../services/message";
+import { Message } from "stoat.js";
 
 const POSITIONS_TO_SHOW = 25;
 
 const leaderboard: Command = {
   name: "leaderboard",
   description: "Show the server's level ranking",
-  execute: async (message, args) => {
-    await getLeaderboard(message);
+  execute: async (message, args: string[]) => {
+    await outputLeaderboard(message);
   }
 };
 
-const getLeaderboard = async (message:Message) => {
-
+const outputLeaderboard = async (message:Message) => {
   const usersLevelAndXp = getUsersLevelAndXp();
   const leaderboardData: string[] = [];
 
   if(usersLevelAndXp.length === 0) {
-    await message.reply("No leaderboard data yet. Send messages and be the first!");
+    emitMessage("REPLY", "MESSAGE", message, "No leaderboard data yet. Send messages and be the first!");
     return;
   }
 
@@ -29,23 +30,23 @@ const getLeaderboard = async (message:Message) => {
     const xpNeeded = getXpToNextLevel(user.level);
 
     leaderboardData.push(
-      `${rank}. **<@${user.userId}>** — Lv. **${user.level}** (XP: **${user.xp}/${xpNeeded}**)`
+      `${rank}. **<@${user.userId}>** — Lv. **${user.level}** (XP: **${user.xp}/${xpNeeded}**) [**${user.xp_total}** total XP]`
     );
     
-  })
-
-  await message.reply({
-    embeds: [{
-      title: "Server Leaderboard",
-      description: leaderboardData.join("\n"),
-      colour: "#00ff00"
-    }]
   });
+
+  const embed = {
+    title: MESSAGE_STRINGS.leaderboard_title,
+    description: leaderboardData.join("\n"),
+    colour: "#00ff00"
+  };
+
+  emitMessage("EMBED", "EMBED", message, embed);
 }
 
 const getUsersLevelAndXp = () => {
     const GET_USERS_LEVEL_AND_XP_QUERY =
-    `SELECT user_id as userId, level, xp FROM user_level_data
+    `SELECT user_id as userId, level, xp, xp_total FROM user_level_data
     ORDER BY level DESC, xp DESC`;
 
     const usersLevelAndXp = db.prepare(GET_USERS_LEVEL_AND_XP_QUERY);

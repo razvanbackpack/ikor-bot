@@ -8,9 +8,10 @@ class User {
     }
 
     getLevelData(): IUserLevelData | null {
-        const QUERY = 
+        const QUERY =
         `SELECT level.user_id as userId,
             level.xp,
+            level.xp_total,
             level.level,
             level.last_message_at as lastMessageAt,
             level.last_level_at as lastLevelAt
@@ -26,7 +27,7 @@ class User {
     }
 
     static async create(userId: string): Promise<User> {
-        
+
         const user = new User(userId);
 
         const doesUserExist = db.prepare("SELECT id FROM user WHERE id = ?").get(userId);

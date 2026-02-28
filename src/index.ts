@@ -1,4 +1,4 @@
-import BOT_INFO from './core/config';
+import { BOT_INFO } from './core/config';
 import logger from './util/logger';
 import { handleXPforCurrentMessage } from "./services/xpService";
 import { handleCommand } from './services/commandService';
@@ -9,12 +9,14 @@ let running = true;
 let shuttingDown = false;
 let reconnectTimeout: NodeJS.Timeout | null = null;
 
+const CLIENT_ERROR_CATEGORY_NAME = "CLIENT_ERROR";
+
 export function initializeBot(): void {
- 
+
   client.on("ready", async () => {
     logger.info("BOOT", `${BOT_INFO.name} (v${BOT_INFO.version}) booting up.`)
     setTimeout(async () => {
-      
+
       // This DOES get set; Stoat UI is buggy and doesn't update.
       // refersh app and Ikor will be online
 
@@ -24,7 +26,7 @@ export function initializeBot(): void {
           text: `v${BOT_INFO.version} - !help`
         }
       });
-      
+
       logger.info("INFO", `Logged in: ${BOT_INFO.name} (v ${BOT_INFO.version}) (${client.user?.username}#${client.user?.discriminator})`);
     }, 3000);
   });
@@ -34,9 +36,9 @@ export function initializeBot(): void {
   });
 
   client.on("error", (error) => {
-    handleError(error);  
+    handleError(error);
   });
-  
+
   login();
 }
 
@@ -48,16 +50,16 @@ function login() {
 async function handleError(error: any) {
   if(!running) return;
 
-  logger.error("ERROR", "[ERROR] Event occurred:", error);
+  logger.error(CLIENT_ERROR_CATEGORY_NAME, "Event occurred:", error);
   // Access structured error via events client
   const structuredError = client.events.lastError;
   if (structuredError) {
-    logger.error("ERROR", "[ERROR] Structured error:", structuredError);
+    logger.error(CLIENT_ERROR_CATEGORY_NAME, "Structured error:", structuredError);
 
     if (structuredError.type === "socket") {
-      logger.error("ERROR", "[ERROR] Socket error:", structuredError.data);
+      logger.error(CLIENT_ERROR_CATEGORY_NAME, "Socket error:", structuredError.data);
     } else if (structuredError.type === "revolt") {
-      logger.error("ERROR", "[ERROR] Stoat API error:", structuredError.data);
+      logger.error(CLIENT_ERROR_CATEGORY_NAME, "Stoat API error:", structuredError.data);
     }
   }
 
@@ -65,7 +67,7 @@ async function handleError(error: any) {
 
   reconnectTimeout = setTimeout(() => {
     reconnectTimeout = null;
-  
+
     if (shuttingDown) return;
     logger.error("GATEWAY", "Reconnecting bot...");
     client?.removeAllListeners();
@@ -81,7 +83,7 @@ async function handleMessage(message: Message) {
 
   if(BOT_INFO.features.xp_system)
     handleXPforCurrentMessage(message); // this should ALWAYS be first
-  
+
   if(BOT_INFO.features.commands)
     handleCommand(message);
 }
@@ -107,4 +109,3 @@ function shutdown(signal: string) {
     process.exit(0);
   }, 500);
 }
-

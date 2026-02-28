@@ -1,5 +1,6 @@
 import { register, type Command, commands } from "./command";
-import type { Message } from "stoat.js";
+import { Message } from "stoat.js";
+import { emitMessage } from "../services/message";
 
 const help: Command = {
   name: "help",
@@ -9,26 +10,27 @@ const help: Command = {
   }
 };
 
-const commandList = async (message:Message, args:string[]) => {
+const commandList = async (message: Message, args: string[]) => {
   let description = "";
 
   let first_loop = true;
   for (const [name, cmd] of commands) {
     let newline = `\n`
-    if(first_loop) {
+    if (first_loop) {
       newline = "";
       first_loop = false;
     }
     description += `${newline}**!${name}** - ${cmd.description}`;
   }
 
-  await message.reply({
-    embeds: [{
+  const embed = {
+      type: "Text",
       title: "Available Commands",
       description,
       colour: "#00ff00"
-    }]
-  });
+  };
+
+  emitMessage("EMBED", "EMBED", message, embed);
 }
 
 register(help);

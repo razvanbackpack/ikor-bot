@@ -2,8 +2,10 @@ import { db } from "../core/database";
 import User from "../core/user";
 import { Message } from "stoat.js";
 import logger from "../util/logger";
-
+import { BotEvents } from "../core/botEvents";
 import IUserLevelData from "../interface/IUserLevelData";
+import IChatReply from "../interface/IChatReply";
+import { MESSAGE_STRINGS } from "../core/config";
 
 const COOLDOWN = 10;
 const MODIFIER = 1;
@@ -40,7 +42,12 @@ export async function handleXPforCurrentMessage(message: Message) {
     increaseResult = increaseUserXp(userId, userLevelData as IUserLevelData, xpToAdd);
 
   if(increaseResult.levelUp) {
-    message.reply(`Congratulations! You leveled up to ${increaseResult.newLevel}!`);
+    const levelUpMessage = MESSAGE_STRINGS.levelup_message.replace("#NEW_LEVEL#", increaseResult.newLevel.toString());
+    const chatData: IChatReply = {
+      content: levelUpMessage
+    };
+    
+    BotEvents.emit("chat:reply", {message, chatData});
   }
 }
 
@@ -57,6 +64,7 @@ export function getXpToNextLevel(currentLevel: number) {
 function increaseUserXp(userId:string, userLevelData: IUserLevelData, xpToAdd: number) {
   const currentUserXp = userLevelData.xp;
   let newUserXp = currentUserXp + xpToAdd;
+  let totalUserXp = userLevelData.xp_total;
   let requiredXpToNextLevel = getXpToNextLevel(userLevelData.level);
   let increaseResults = {
     xpAdded: newUserXp,
@@ -64,7 +72,7 @@ function increaseUserXp(userId:string, userLevelData: IUserLevelData, xpToAdd: n
     newLevel: 0
   };
 
-  if(newUserXp >= requiredXpToNextLevel) 
+  if(newUserXp >= requiredXpToNextLevel)
   {
     newUserXp -= requiredXpToNextLevel;
     let newUserLevel = increaseUserLevel(userId, userLevelData)
@@ -74,15 +82,18 @@ function increaseUserXp(userId:string, userLevelData: IUserLevelData, xpToAdd: n
     }
   }
 
+  let newTotalUserXp = totalUserXp + xpToAdd;
+
   const INCREASE_USER_EXP_QUERY =
   `UPDATE user_level_data
   SET xp = ?,
+    xp_total = ?,
     last_message_at = ?
   WHERE user_id = ?`;
 
   try {
     const increaseUserExp = db.prepare(INCREASE_USER_EXP_QUERY);
-    const increaseUserExpRun = increaseUserExp.run(newUserXp,  Math.floor(Date.now() / 1000), userId);
+    const increaseUserExpRun = increaseUserExp.run(newUserXp, newTotalUserXp,  Math.floor(Date.now() / 1000), userId);
     if(increaseUserExpRun.changes === 1) {
       logger.info(LOGGER_CATEGORY_XP, `>> XP: ${xpToAdd} to ${userId}`)
       increaseResults.xpAdded = xpToAdd;
@@ -115,7 +126,5 @@ function increaseUserLevel(userId: string, userLevelData: IUserLevelData): numbe
     logger.error("LEVEL_UP", "Failed to increase user level", { error });
   }
 
-  return null;  
+  return null;
 }
-
-

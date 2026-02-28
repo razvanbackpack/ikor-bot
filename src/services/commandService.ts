@@ -11,8 +11,6 @@ import "../commands/leaderboard";
 import "../commands/roll";
 
 export async function handleCommand(message: Message) {
-    // const userId = message.author.id;
-    // const Message:Message = message;
     if (message.mentionIds?.includes(client.user!.id)) {
         await message.reply("Type !help for commands!");
         return;

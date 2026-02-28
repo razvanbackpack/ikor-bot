@@ -1,6 +1,6 @@
-const BOT_INFO = {
+export const BOT_INFO = {
     name: 'IKOR',
-    version: '0.1.0',
+    version: '0.1.2',
 
     features: {
         xp_system: true,
@@ -8,11 +8,10 @@ const BOT_INFO = {
     },
 
 
-    strings: {
-        leaderboard_title: "SERVER LEADERBOARD",
-
-        levelup_message: "Congratulations! You leveld up to #NEW_LEVEL#",
-    }
+    
 };
 
-export default BOT_INFO;
+export const MESSAGE_STRINGS = {  
+    leaderboard_title: "SERVER LEADERBOARD",
+    levelup_message: "Congratulations! You leveled up to #NEW_LEVEL#",
+};

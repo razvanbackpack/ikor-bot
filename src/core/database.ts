@@ -14,6 +14,7 @@ const USER_LEVEL_DATA_TABLE = `
   CREATE TABLE IF NOT EXISTS user_level_data (
     user_id INTEGER NOT NULL DEFAULT 0,
     xp INTEGER NOT NULL DEFAULT 0,
+    xp_total INTEGER NOT NULL DEFAULT 0,
     level INTEGER NOT NULL DEFAULT 1,
     last_message_at TEXT,
     last_level_at TEXT
