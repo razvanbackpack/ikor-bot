@@ -1,5 +1,5 @@
 import { type Command } from "../core/command";
-import { emitMessage } from "../services/message";
+import { emitMessage } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const ping: Command = {

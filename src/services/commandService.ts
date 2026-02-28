@@ -20,7 +20,7 @@ export async function loadCommands(): Promise<void> {
         if (file === "command.ts" || file === "command.js") return false;
         if (file.endsWith(".d.ts")) return false;
         const ext = extname(file);
-        return ext === ".ts" || ext === ".js";
+        return ext === ".ts";
     });
 
     const loaded: string[] = [];

@@ -3,6 +3,8 @@ import { Message } from "stoat.js";
 import { isBotEventError, BotEventError } from "../errors/BotEventError";
 import logger from "../util/logger";
 
+const LOGGER_CATEGORY_EVENT_BUS = "EVENT_BUS";
+
 type EventMap = {
   "chat:reply": { message: Message; chatData: IChatReply };
   "chat:edit": { message: Message; chatData: IChatReply };
@@ -36,7 +38,7 @@ class EventBus {
   ): Promise<EventResultMap[K] | undefined> {
     const list = this.handlers.get(event);
     if (!list || list.length === 0) {
-      logger.error("EVENT_BUS", "No handlers registered", {event, payload});
+      logger.error(LOGGER_CATEGORY_EVENT_BUS, "No handlers registered", {event, payload});
       return undefined;
     };
     try {
@@ -44,7 +46,7 @@ class EventBus {
     }
     catch (err) {
       if (isBotEventError(err)) {
-        logger.error("EVENT_BUS", err.message, {
+        logger.error(LOGGER_CATEGORY_EVENT_BUS, err.message, {
           event: err.event,
           code: err.code,
           details: err.details,
@@ -53,13 +55,13 @@ class EventBus {
       }
 
       if (err instanceof Error) {
-        logger.error("EVENT_BUS", err.message, {
+        logger.error(LOGGER_CATEGORY_EVENT_BUS, err.message, {
           stack: err.stack,
           event: String(event)
         });
       }
 
-      logger.error("EVENT_BUS", "Non-Error thrown", {
+      logger.error(LOGGER_CATEGORY_EVENT_BUS, "Non-Error thrown", {
         err, event:
           String(event)
       });

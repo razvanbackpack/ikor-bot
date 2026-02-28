@@ -1,6 +1,6 @@
 import { type Command } from "../core/command";
 import IRollResult from "../interface/IRollResult";
-import { emitMessage } from "../services/message";
+import { emitMessage } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const roll: Command = {

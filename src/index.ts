@@ -51,7 +51,7 @@ async function handleError(error: any) {
   if(!running) return;
 
   logger.error(CLIENT_ERROR_CATEGORY_NAME, "Event occurred:", error);
-  // Access structured error via events client
+
   const structuredError = client.events.lastError;
   if (structuredError) {
     logger.error(CLIENT_ERROR_CATEGORY_NAME, "Structured error:", structuredError);

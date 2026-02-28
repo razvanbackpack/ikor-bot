@@ -1,6 +1,6 @@
 import { type Command, commands } from "../core/command";
 import { Message } from "stoat.js";
-import { emitMessage } from "../services/message";
+import { emitMessage } from "../services/messageService";
 
 const help: Command = {
   name: "help",

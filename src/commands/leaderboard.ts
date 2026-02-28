@@ -3,7 +3,7 @@ import { db } from '../core/database';
 import { getXpToNextLevel } from "../services/xpService";
 import IUserLevelData from "../interface/IUserLevelData";
 import { MESSAGE_STRINGS } from "../core/config";
-import { emitMessage } from "../services/message";
+import { emitMessage } from "../services/messageService";
 import { Message } from "stoat.js";
 
 const POSITIONS_TO_SHOW = 25;
