@@ -1,10 +1,11 @@
-import { register, type Command } from "./command";
+import { type Command } from "../core/command";
 import IRollResult from "../interface/IRollResult";
 import { emitMessage } from "../services/message";
 import { Message } from "stoat.js";
 
 const roll: Command = {
   name: "roll",
+  disabled: false,
   description: "Roll a dice. Example: !roll d20 10, rolls a d20 10 times and outputs the values",
   execute: async (message: Message, args: string[]) => {
     const rollResult: IRollResult = rollDice(args);
@@ -123,4 +124,5 @@ function parsePositiveInt(input: string): number | null {
   return value;
 }
 
-register(roll);
+
+export default roll;

@@ -1,9 +1,10 @@
-import { register, type Command, commands } from "./command";
+import { type Command, commands } from "../core/command";
 import { Message } from "stoat.js";
 import { emitMessage } from "../services/message";
 
 const help: Command = {
   name: "help",
+  disabled: false,
   description: "Show available commands",
   execute: async (message, args) => {
     commandList(message, args);
@@ -15,6 +16,7 @@ const commandList = async (message: Message, args: string[]) => {
 
   let first_loop = true;
   for (const [name, cmd] of commands) {
+    if(cmd.disabled) continue;
     let newline = `\n`
     if (first_loop) {
       newline = "";
@@ -33,4 +35,4 @@ const commandList = async (message: Message, args: string[]) => {
   emitMessage("EMBED", "EMBED", message, embed);
 }
 
-register(help);
+export default help;

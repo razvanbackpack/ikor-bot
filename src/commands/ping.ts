@@ -1,9 +1,10 @@
-import { register, type Command } from "./command";
+import { type Command } from "../core/command";
 import { emitMessage } from "../services/message";
 import { Message } from "stoat.js";
 
 const ping: Command = {
   name: "ping",
+  disabled: false,
   description: "Pong!",
   execute: async (message: Message, args: string[]) => {
     const start = Date.now();
@@ -13,4 +14,4 @@ const ping: Command = {
   }
 }
 
-register(ping);
+export default ping;

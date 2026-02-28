@@ -1,10 +1,11 @@
-import { register, type Command } from "./command";
+import { type Command } from "../core/command";
 import { BOT_INFO } from "../core/config";
 import { emitMessage } from "../services/message";
 import { Message } from "stoat.js";
 
 const info: Command = {
   name: "info",
+  disabled: false,
   description: "Bot info",
   execute: async (message: Message, args: string[]) => {
 
@@ -24,4 +25,4 @@ const info: Command = {
   }
 };
 
-register(info);
+export default info;

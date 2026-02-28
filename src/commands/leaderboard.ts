@@ -1,4 +1,4 @@
-import { register, type Command } from "./command";
+import { type Command } from "../core/command";
 import { db } from '../core/database';
 import { getXpToNextLevel } from "../services/xpService";
 import IUserLevelData from "../interface/IUserLevelData";
@@ -10,6 +10,7 @@ const POSITIONS_TO_SHOW = 25;
 
 const leaderboard: Command = {
   name: "leaderboard",
+  disabled: false,
   description: "Show the server's level ranking",
   execute: async (message, args: string[]) => {
     await outputLeaderboard(message);
@@ -55,5 +56,4 @@ const getUsersLevelAndXp = () => {
     return usersLevelAndXpData as IUserLevelData[];
 }
 
-register(leaderboard);
-
+export default leaderboard;
