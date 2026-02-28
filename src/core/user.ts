@@ -7,6 +7,10 @@ class User {
         this.userId = userId;
     }
 
+    /**
+     * Gets the level data of a user.
+     * @returns IUserLevelData | null
+     */
     getLevelData(): IUserLevelData | null {
         const QUERY =
         `SELECT level.user_id as userId,

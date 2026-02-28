@@ -1,10 +1,7 @@
 import { BotEvents } from "../core/botEvents";
-import { client } from "../core/client";
-import logger from "../util/logger";
 import IChatReply from "../interface/IChatReply";
 import { BotEventError } from "../errors/BotEventError";
 import { Message } from "stoat.js";
-import IkorUtil from "../util/IkorUtil";
 
 const enum BOT_EVENTS_ERROR {
   REPLY = "CONTENT_UNDEFINED_CHAT:REPLY",
@@ -93,7 +90,7 @@ export function registerMessageHandlers() {
     return reply;
   });
 
-  BotEvents.on("chat:react", async(payload) => {
+  BotEvents.on("chat:react", async (payload) => {
     const { message, chatData } = payload;
     const react = chatData.react;
 
@@ -118,20 +115,31 @@ export async function emitMessage(
   data: any
 ): Promise<Message | undefined> {
 
-  const chatData = IkorUtil.makeChatReply(type, data);
+  const chatData = makeChatReply(type, data);
 
-  switch(event) {
+  switch (event) {
     case "REPLY":
-      return BotEvents.emit("chat:reply", {message, chatData});
+      return BotEvents.emit("chat:reply", { message, chatData });
     case "EDIT":
-      BotEvents.emit("chat:edit", {message, chatData});
+      BotEvents.emit("chat:edit", { message, chatData });
       break;
     case "EMBED":
-      return BotEvents.emit("chat:embed", {message, chatData});
+      return BotEvents.emit("chat:embed", { message, chatData });
     case "REACT":
-      BotEvents.emit("chat:react", {message, chatData});
+      BotEvents.emit("chat:react", { message, chatData });
       break;
   }
 
   return undefined;
 }
+
+function makeChatReply(type: "MESSAGE" | "EMBED" | "REACT", data: any): IChatReply {
+  switch (type) {
+    case "MESSAGE":
+      return { content: data };
+    case "EMBED":
+      return { embeds: [{ type: "Text", ...data }] };
+    case "REACT":
+      return { react: data };
+  }
+};
