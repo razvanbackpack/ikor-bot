@@ -21,5 +21,13 @@ const USER_LEVEL_DATA_TABLE = `
   );
 `;
 
+const BANNED_WORDS_DATA_TABLE = `
+  CREATE TABLE IF NOT EXISTS banned_word (
+    id INTEGER NOT NULL DEFAULT 0,
+    word TEXT,
+    // TODO
+  );
+`;
+
 db.exec(USER_TABLE);
 db.exec(USER_LEVEL_DATA_TABLE);

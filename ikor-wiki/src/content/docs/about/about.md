@@ -1,11 +1,7 @@
 ---
-sidebar_position: 1
+title: Getting Started
+description: Get started with Ikor
 ---
-
-# About
-
-Welcome to the ikor-bot wiki!
-
 You can find here some basic info about `ikor-bot`, how to run it, and how to modify it.
 
 ## Tech Stack
@@ -37,6 +33,3 @@ There is a modifier, but it is set to x1.
 2. Get your bot token and fill it in `.env`
 3. Run `npm run dev`
 
-
-
- 

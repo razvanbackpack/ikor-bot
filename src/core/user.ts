@@ -15,7 +15,7 @@ class User {
         const QUERY =
         `SELECT level.user_id as userId,
             level.xp,
-            level.xp_total,
+            level.xp_total as xpTotal,
             level.level,
             level.last_message_at as lastMessageAt,
             level.last_level_at as lastLevelAt

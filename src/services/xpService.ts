@@ -6,13 +6,8 @@ import { BotEvents } from "../core/botEvents";
 import IUserLevelData from "../interface/IUserLevelData";
 import IChatReply from "../interface/IChatReply";
 import { MESSAGE_STRINGS } from "../core/config";
+import { BOT_INFO } from "../core/config";
 
-const COOLDOWN = 10;
-const MODIFIER = 1;
-
-const XP_PER_MESSAGE = 10;
-const XP_EXPONENT = 0; // 0 - disabled
-const XP_BASE = 20;
 const LOGGER_CATEGORY_XP = "XP_GAIN";
 const LOGGER_CATEGORY_LEVEL = "LEVEL_UP";
 
@@ -26,7 +21,7 @@ export async function handleXPforCurrentMessage(message: Message) {
   let userLevelData = user.getLevelData();
   const lastMessageAt = Number(userLevelData?.lastMessageAt);
   const now = Math.floor(Date.now() / 1000);
-  const xpToAdd = XP_PER_MESSAGE * MODIFIER;
+  const xpToAdd = BOT_INFO.xp_system.xp_per_message * BOT_INFO.xp_system.modifier;
   let increaseResult = {
     xpAdded: 0,
     levelUp: false,
@@ -38,7 +33,7 @@ export async function handleXPforCurrentMessage(message: Message) {
     logger.error(LOGGER_CATEGORY_XP, "User data is empty", {userId:userId});
   }
 
-  if(now - lastMessageAt >= COOLDOWN)
+  if(now - lastMessageAt >= BOT_INFO.xp_system.cooldown)
     increaseResult = increaseUserXp(userId, userLevelData as IUserLevelData, xpToAdd);
 
   if(increaseResult.levelUp) {
@@ -53,10 +48,10 @@ export async function handleXPforCurrentMessage(message: Message) {
 
 export function getXpToNextLevel(currentLevel: number) {
   let xpToNextLevel = 0;
-  if(XP_EXPONENT > 0)
-    xpToNextLevel = Math.floor(XP_BASE * Math.pow(currentLevel, XP_EXPONENT));
+  if(BOT_INFO.xp_system.exponent > 0)
+    xpToNextLevel = Math.floor(BOT_INFO.xp_system.base * Math.pow(currentLevel, BOT_INFO.xp_system.exponent));
   else
-    xpToNextLevel = XP_BASE * currentLevel * currentLevel;
+    xpToNextLevel = BOT_INFO.xp_system.base * currentLevel * currentLevel;
 
   return xpToNextLevel;
 }
@@ -64,7 +59,7 @@ export function getXpToNextLevel(currentLevel: number) {
 function increaseUserXp(userId:string, userLevelData: IUserLevelData, xpToAdd: number) {
   const currentUserXp = userLevelData.xp;
   let newUserXp = currentUserXp + xpToAdd;
-  let totalUserXp = userLevelData.xp_total;
+  let totalUserXp = userLevelData.xpTotal;
   let requiredXpToNextLevel = getXpToNextLevel(userLevelData.level);
   let increaseResults = {
     xpAdded: newUserXp,

@@ -7,7 +7,13 @@ export const BOT_INFO = {
         commands: true
     },
 
-
+    xp_system: {
+        base: 10, // used to calculate each level's required xp
+        exponent: 0, //this will use exponent (base*level^exponent) instead of base * level^2
+        cooldown: 10,
+        modifier: 1,
+        xp_per_message: 20,
+    }
     
 };
 

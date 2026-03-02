@@ -76,10 +76,8 @@ async function handleError(error: any) {
 }
 
 async function handleMessage(message: Message) {
-  console.log('got message');
   if(shuttingDown) return;
   if (message.author?.bot) return;
-  console.log(message.content);
 
   if(BOT_INFO.features.xp_system)
     handleXPforCurrentMessage(message); // this should ALWAYS be first
