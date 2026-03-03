@@ -1,6 +1,6 @@
 [![Node.js CI](https://github.com/razvanbackpack/ikor-bot/actions/workflows/node.js.yml/badge.svg)](https://github.com/razvanbackpack/ikor-bot/actions/workflows/node.js.yml)
  
-### IKOR <small>v0.1.2</small> 
+### IKOR <small>v0.1.2</smal
 
 > Bot is heavily under development. Use it at your own risk.
 
