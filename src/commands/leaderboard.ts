@@ -31,7 +31,7 @@ const outputLeaderboard = async (message:Message) => {
     const xpNeeded = getXpToNextLevel(user.level);
 
     leaderboardData.push(
-      `${rank}. **<@${user.userId}>** — Lv. **${user.level}** (XP: **${user.xp}/${xpNeeded}**) [**${user.xp_total}** total XP]`
+      `${rank}. **<@${user.userId}>** — Lv. **${user.level}** (XP: **${user.xp}/${xpNeeded}**) [**${user.xpTotal}** total XP]`
     );
     
   });
